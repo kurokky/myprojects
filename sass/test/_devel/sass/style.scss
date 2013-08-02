@@ -1,0 +1,345 @@
+@charset "UTF-8";
+@import "compass/css3/border-radius";
+@import "util";
+$ds:60;
+.csssprite {
+	background{
+		image: url("/img/csssprite.png");
+		repeat: no-repeat;
+	}
+	overflow: hidden;
+	display:inline-block;
+}
+
+#logo {
+	background-position:0px 0px;
+	width: 306px;
+	height: 90px;
+	background{
+		image: url("/img/logos.png");
+		repeat: no-repeat;
+	}
+	overflow: hidden;
+	display:inline-block;
+}
+
+.icon_devlop {
+	@include icon_size(-1,-1);
+}
+.icon_dl     {
+	@include icon_size(0,-1);
+}
+.icon_hard   {
+	@include icon_size(-7);
+}
+.icon_link   {
+	@include icon_size(-6);
+}
+.icon_book   {
+	@include icon_size(-5);
+}
+.icon_mail   {
+	@include icon_size(-4);
+}
+.icon_memo   {
+	@include icon_size(-3);
+}
+.icon_text   {
+	@include icon_size(-2);
+}
+.icon_tool   {
+	@include icon_size(-1);
+}
+.icon_top    {
+	@include icon_size(0);
+}
+
+
+a{color:#03c;
+	&:hover{text-decoration:none}
+}
+
+body{
+	margin:5px;
+	padding:0;
+	background:#333;
+	behavior:url(/css/PIE.htc);
+}
+
+.cf:before , .cf:after{
+	content:"";
+	display:block;
+	overflow:hidden;
+}
+
+.cf:after {
+	clear:both;
+}
+
+.cf {
+	zoom:1;
+}
+
+img{
+	border:0;
+}
+
+ul , li {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+div.menu{
+	background:#000;
+}
+
+ul.icon_menu{
+	background:#000;
+	width:990px;
+	margin-left:3px;
+	padding:5px 0;
+	margin:0 auto;
+	li{
+		display:inline;
+		span{
+			display:none;
+		}
+	}
+}
+
+#logo{
+	position:relative; 
+}
+/* header */
+
+#header h1{
+	@include border_radius(10px,10px,0,0);
+	/*behavior:url(/css/PIE.htc);*/
+	position:relative;
+	background:{
+		color:#f93;
+		image:url("/img/hori.png");
+		position:center bottom;
+		repeat:repeat-x;
+	}
+	text-align:center;
+	margin:0;
+	padding:5px 0 0 0;
+	h1 a{
+		position:relative;
+		background:#000;
+	}
+	ul{
+		position:relative;
+		text-align:right;
+	}
+}
+
+#footer{
+	position:relative; 
+	clear:both;
+	p{
+		font{
+			size:12px;
+			weight:normal;
+		}
+		text-align:right;
+		@include border_radius(0,0,10px,10px);
+		background-color:#f93;
+		margin:0;
+		padding:3px 10px 10px 0;
+		position:relative; 
+		behavior:url(/css/PIE.htc);
+	}
+}
+
+/* main contents */
+.temp{
+	background:#ff9;
+}
+
+
+#main{
+	width:990px;
+	background:#ff9;
+	margin:0 auto;
+	padding:20px 0;
+	position:relative;
+}
+
+
+.three_left{
+	float:left;
+	width:250px;
+}
+
+.three_center{
+	float:left;
+	width:460px;
+	margin-left:40px;
+	.content{
+		width:460px;
+	}
+}
+
+.three_right{
+	float:right;
+	width:200px;
+	margin-top:12px;
+}
+
+.two_left{
+	float:left;
+	width:760px;
+}
+
+.two_right{
+	float:right;
+	width:200px;
+	margin-top:12px;
+}
+
+/* app_links */
+.app_links li{
+	background:#FFFFE6;
+	@include border_radius(5px,5px,5px,5px);
+	@include border_shadow(0,1px,10px,0,0,0,0.6);
+	position:relative; 
+	behavior:url(/css/PIE.htc);
+	padding:10px 0;
+	margin-bottom:10px;
+	img{
+		@include border_radius(5px,5px,5px,5px);
+		position:relative; 
+		behavior:url(/css/PIE.htc);
+	}
+	.linktext{
+		font-size:12px;
+	}
+
+	.explain{
+		font-size:12px;;
+		margin:0 5px 5px 5px;
+		line-height:150%;
+	}
+}
+
+.app_title{
+	font-size:12px;;
+	text-align:center;
+	background:#fff;
+	color:#000;
+	@include border_radius(5px,5px,5px,5px);
+	@include border_shadow(0,0,0,0,0,0,0.6);
+	position:relative;
+	behavior:url(/css/PIE.htc);
+	padding:10px 0;
+}
+
+/* twitter */
+#twitter{
+	margin:0px 0 0 0;
+	padding:0;
+	background-color:#630;
+	@include border_radius(5px,5px,5px,5px);
+	@include border_shadow(0,0,0,0,0,0,0.6);
+	position:relative; 
+	behavior:url(/css/PIE.htc);
+	.loading{
+		text-align:center;
+	}
+	h3{
+		margin:0 0 6px 0;
+	}
+	h3 a{
+		display:block;
+		height:12px;
+		width:235px;
+		background{
+			image:url("/img/tw_logo.png");
+			repeat:no-repeat;
+			position:100% 10px;
+		}
+		padding:0px 0px 10px 6px;
+		position:relative;
+		margin:0;
+		h3 a span{
+			display:none;
+		}
+	}
+	li{
+		font-size:12px;
+		color:#333;
+		padding:5px;
+		margin:0 6px 6px 6px;
+		@include bg_gradient(#cc6633, #EB8513);
+		@include border_radius(5px,5px,5px,5px);
+		position:relative; 
+		behavior:url(/css/PIE.htc);
+		line-height:150%;
+		li span{
+			display:block;
+			text-align:right;
+		}
+	}
+}
+
+/****************
+	main content
+****************/
+	
+.content{
+	h2,h3{
+		font-size:14px;
+		text-align:center;
+		margin:5px 0 0 0;
+		display:block;
+		color:#fff;
+		width:114px;
+		padding:2px 0;
+		background-color:#B65B00;
+		@include border_shadow(0,1px,10px,0,0,0,0.6);
+		@include border_radius(5px,5px,0,0);
+		position:relative; 
+		behavior:url(/css/PIE.htc);
+	}
+
+	dl ,div{
+		padding:5px 0;
+		margin:0 0 10px 0;
+		font-size:12px;
+		line-height:180%;
+		@include border_shadow(0,1px,10px,0,0,0,0.6);
+		/*position:relative; */
+		background-color:#FFFFE1;
+		@include border_radius(0,5px,5px,5px);
+		behavior:url(/css/PIE.htc);
+		/*width:460px;*/
+	}
+	dt{
+		clear:both;
+		display:block;
+		float:left;
+		width:60px;
+		padding:0 20px;
+	}
+	dd{
+		/*width:460px;*/
+	}
+	p{
+		padding:0 20px;
+	}
+}
+
+#links{
+	clear:both;
+	text-align:right;
+	ul{
+		text-align:right;
+	}
+	li{
+		display:inline;
+	}
+}
+

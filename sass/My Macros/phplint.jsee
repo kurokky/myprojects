@@ -1,0 +1,83 @@
+/**
+ * phplint.jsee
+ * @package  emeditor wiki
+ * @required php for windows
+**/
+
+/**
+ * メイン関数
+ */
+function phplint()
+{
+    if(!document.Saved)
+    {
+        try{
+            
+            document.Save(document.FullName);
+            wshshell = new ActiveXObject("Wscript.shell");
+            file     = document.Path + "\\" + "phplint";
+            save     = "c:\\phplint.txt";
+            cmd      = "cmd /c php -l \"";  //リダイレクトを使いたいので
+            command  = cmd + document.FullName + "\" > \""+ save +"\"";
+            wshshell.run(command, 0, true);
+            
+            content = doFile(save, 2);      //ファイル読み込み
+            status= content;
+            checkFile(content);             //文字列内容検査
+            doFile(save, 1);                //構文解析ファイル削除
+
+        }catch(e){
+            raiseError(e);
+        }
+    }
+}
+
+/**
+ * エラー表示
+ *   raiseError(string);
+ */
+function raiseError(e)
+{
+    alert(e);
+}
+
+/**
+ * ファイル読みこみ・削除
+ *   doFile(ファイルパス,type)
+ *      type = 1 該当ファイルを削除
+ *      type = 2 該当ファイルを読み込み 
+ * return content;
+ */
+function doFile(_file,_type)
+{
+    FSO = new ActiveXObject("Scripting.FilesystemObject");
+    if(FSO.FileExists(_file))
+    {
+        switch(_type)
+        {
+            case 1:
+                FSO.DeleteFile(_file);
+                return true;
+            default:
+                fd       = FSO.OpenTextFile(_file,1,0,-2);
+                content  = fd.ReadAll();
+                fd.Close();
+                return content;
+        }
+    }
+}
+
+/**
+ * 構文解析ファイルの文字列をチェック
+ *   checkFile(string)
+ * return boolean;
+ */
+function checkFile(_content)
+{
+    OutputBar.Clear();
+    OutputBar.writeln(_content);
+    OutputBar.Visible = true;
+    OutputBar.SetFocus();
+}
+
+phplint()

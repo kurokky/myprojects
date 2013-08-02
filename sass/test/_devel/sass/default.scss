@@ -1,0 +1,175 @@
+@mixin border-radius($PR){
+	-webkit-border-radius:$PR;
+	-moz-border-radius:$PR;
+	border-radius:$PR;
+}
+
+@mixin transform($PR,$VAL){
+	-webkit-transform:$PR($VAL);
+	-moz-transform:$PR($VAL);
+	transform:$PR($VAL);
+}
+
+@mixin border-shadow($PR, $RGBA ){
+	-moz-box-shadow: $PR rgba($RGBA);
+	-webkit-box-shadow: $PR rgba($RGBA);
+	box-shadow: $PR rgba($RGBA);
+}
+
+@mixin gradient($BEGIN , $END){
+	background: -webkit-liner-gradient(top, from($BEGIN), to($END));
+	background:-moz-linear-gradient(top, $BEGIN, $END);
+	background: linear-gradient(top,$BEGIN, $END);
+}
+
+@mixin icon_size($X:0,$Y:0){
+	$isize:60;
+	background-position: #{$isize*$X}px #{$isize*$Y}px;
+	width :#{$isize}px;
+	height:#{$isize}px;
+}
+
+@mixin mr($T:"",$R:"",$B:"",$L:""){
+	margin:#{$T} #{$R} #{$B} #{$L};
+}
+
+@mixin pd($T:"",$R:"",$B:"",$L:""){
+	padding:#{$T} #{$R} #{$B} #{$L};
+}
+
+@mixin display-box(){
+	display: -webkit-box;
+	display: -moz-box;
+}
+
+/*
+	$TYPE
+	(c => 'content-box', b =>'border-box');
+
+*/
+@mixin box-sizing($TYPE){
+	@if $TYPE == c {
+		-moz-box-sizing: content-box;
+		-webkit-box-sizing: content-box;
+		box-sizing: content-box;
+	} @else if $TYPE == b {
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+	} @else{
+		-moz-box-sizing: #{$TYPE};
+		-webkit-box-sizing: #{$TYPE};
+		box-sizing:  #{$TYPE};
+	}
+}
+
+@mixin border-box(){
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+@mixin box-flex($I:1){
+	-moz-box-flex: #{$I};
+	-webkit-box-flex: #{$I};
+	box-flex: #{$I};
+}
+
+/*
+	$DEF = default
+		(px type size)
+	$PS = position
+		(l=>left , r=>right , t=>top , b=>bottom);
+*/
+@mixin border($DEF,$PS:null){
+	@if $PS == null {
+		border:$DEF;
+	} @else {
+		@each $key in $PS {
+			@if $key == r {
+				border-right:#{$DEF};
+			} @else if $key == l {
+				border-left:#{$DEF};
+			} @else if $key == t {
+				border-top:#{$DEF};
+			} @else if $key == b {
+				border-bottom:#{$DEF};
+			} @else{
+				border-#{$key}:#{$DEF};
+			};
+		}
+	}
+}
+/*
+	$T = display-type
+		(b=>block , box=>box , ib=>inline-block , i=>inline) 
+	$RGB = rgb color
+		(RGBA OK)
+	$W = width
+	$H = height
+	$Z = z-index
+*/
+@mixin display($T:null,$RGB:null,$W:null,$H:null,$Z:null){
+	@if $T == box{
+		display: -webkit-box;
+		display: -moz-box;
+	}
+	@if $T == b {
+		display:block;
+	}
+	@if $T == ib {
+		display:inline-block;
+	}
+	@if $T == i {
+		display:inline;
+	}
+	@if $RGB =! null{
+		background:$RGB;
+	}
+	@if $W != null {
+		width:$W;
+	}
+	@if $H != null {
+		height:$H;
+	}
+	@if $Z != null {
+		z-index:$Z;
+	}
+}
+/*
+	$SZ = size
+		(px || em || % etc)
+	$RGB = 
+
+*/
+@mixin fonts($SZ:null,$RGB:null,$LH:null,$OTHER:null){
+	@if $SZ != null {
+		font-size:$SZ;
+	}
+	@if $RGB != null {
+		color:$RGB;
+	}
+	@if $LH != null {
+		line-height:$LH;
+	}
+	@if $OTHER != null {
+		@each $key in $OTHER {
+			@if $key == b {
+				font-weight:blod;
+			}
+			@if $key == n {
+				font-weight:noraml;
+			}
+			@if $key == l {
+				text-align:left;
+			}
+			@if $key == r {
+				text-align:right;
+			}
+			@if $key == c {
+				text-align:center;
+			}
+		}
+	}
+}
+
