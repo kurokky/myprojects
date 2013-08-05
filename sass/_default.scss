@@ -1,0 +1,171 @@
+@mixin border-radius($PR){
+	//border-radius(property);
+	-webkit-border-radius:$PR;
+	-moz-border-radius:$PR;
+	border-radius:$PR;
+}
+
+@mixin transform($PR,$VAL){
+	//transform(rotate,45deg);
+	-webkit-transform:$PR($VAL);
+	-moz-transform:$PR($VAL);
+	transform:$PR($VAL);
+}
+
+@mixin box-shadow($PR, $RGBA ){
+	//box-shadow(property,RGBA);
+	-moz-box-shadow: $PR $RGBA;
+	-webkit-box-shadow: $PR $RGBA;
+	box-shadow: $PR rgba$RGBA;
+}
+
+@mixin text-shadow($PR, $RGBA ){
+	//text-shadow(property,RGBA);
+	-moz-text-shadow: $PR rgba($RGBA);
+	-webkit-text-shadow: $PR rgba($RGBA);
+	text-shadow: $PR rgba($RGBA);
+}
+
+@mixin gradient($BEGIN , $END){
+	//gradient(RGB, RGB);
+	background: -webkit-liner-gradient(top, from($BEGIN), to($END));
+	background:-moz-linear-gradient(top, $BEGIN, $END);
+	background: linear-gradient(top,$BEGIN, $END);
+}
+
+@mixin display-box(){
+	//display-box();
+	display: -webkit-box;
+	display: -moz-box;
+	display: box;
+}
+
+@mixin mp($M:null,$P:null){
+	//mp(margin,padding);
+	@if $M != null {
+		margin:$M;
+	}
+	@if $P != null {
+		padding:$P;
+	}
+}
+
+@mixin box-sizing($TYPE){
+	//box-sizing(content-box|border-box);
+	@if $TYPE == c {
+		-moz-box-sizing: content-box;
+		-webkit-box-sizing: content-box;
+		box-sizing: content-box;
+	} @else if $TYPE == b {
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+	} @else{
+		-moz-box-sizing: #{$TYPE};
+		-webkit-box-sizing: #{$TYPE};
+		box-sizing:  #{$TYPE};
+	}
+}
+
+@mixin box-flex($I:1){
+	//box-flex(1);
+	-moz-box-flex: #{$I};
+	-webkit-box-flex: #{$I};
+	box-flex: #{$I};
+}
+
+@mixin border($DEF,$PS:null){
+	//border(property,right|left|top|bottom);
+	@if $PS == null {
+		border:$DEF;
+	} @else {
+		@each $key in $PS {
+			@if $key == r {
+				border-right:#{$DEF};
+			} @else if $key == l {
+				border-left:#{$DEF};
+			} @else if $key == t {
+				border-top:#{$DEF};
+			} @else if $key == b {
+				border-bottom:#{$DEF};
+			} @else{
+				border-#{$key}:#{$DEF};
+			};
+		}
+	}
+}
+@mixin display($T:null,$RGB:null,$W:null,$H:null,$Z:null){
+	//display(box|block,inline-block|inline,RGB,width,height,z-index);
+	@if $T == box{
+		display: -webkit-box;
+		display: -moz-box;
+	}
+	@if $T == b {
+		display:block;
+	}
+	@if $T == ib {
+		display:inline-block;
+	}
+	@if $T == i {
+		display:inline;
+	}
+	@if $RGB != null{
+		background:$RGB;
+	}
+	@if $W != null {
+		width:$W;
+	}
+	@if $H != null {
+		height:$H;
+	}
+	@if $Z != null {
+		z-index:$Z;
+	}
+}
+
+@mixin fonts($SZ:null,$RGB:null,$LH:null,$OTHER:null){
+	//fonts(size,RGB,line-height,(bold,text-align));
+	@if $SZ != null {
+		font-size:$SZ;
+	}
+	@if $RGB != null {
+		color:$RGB;
+	}
+	@if $LH != null {
+		line-height:$LH;
+	}
+	@if $OTHER != null {
+		@each $key in $OTHER {
+			@if $key == b {
+				font-weight:blod;
+			}
+			@if $key == n {
+				font-weight:noraml;
+			}
+			@if $key == l {
+				text-align:left;
+			}
+			@if $key == r {
+				text-align:right;
+			}
+			@if $key == c {
+				text-align:center;
+			}
+		}
+	}
+}
+
+@mixin icon_size($X:0,$Y:0){
+	$isize:60;
+	background-position: #{$isize*$X}px #{$isize*$Y}px;
+	width :#{$isize}px;
+	height:#{$isize}px;
+}
+
+@mixin mr($T:"",$R:"",$B:"",$L:""){
+	margin:#{$T} #{$R} #{$B} #{$L};
+}
+
+@mixin pd($T:"",$R:"",$B:"",$L:""){
+	padding:#{$T} #{$R} #{$B} #{$L};
+}
