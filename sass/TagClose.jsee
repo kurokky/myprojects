@@ -1,0 +1,116 @@
+function FindNotTagClose(){
+    var nest = 0;
+    var tag = "";
+    while ( nest >= 0){
+         document.HighlightFind = false;
+        // 1行1桁まで，さかのぼっていれば，強制終了
+        if ( document.selection.GetActivePointX( eePosLogical ) == 1 && document.selection.GetActivePointY( eePosLogical ) == 1){
+            //カーソル位置を元に戻す
+            document.selection.SetActivePoint( eePosLogicalA, xPos, yPos);
+            message = "対応する開始タグがありません．";
+            checkFile(message);
+            break;
+        }
+        tag = "";
+        document.selection.Find("<|>",eeFindPrevious | eeFindReplaceRegExp);
+        document.HighlightFind = false;
+        //<を調べる
+        if ( document.selection.Text == "<" ){
+            //次の文字を調べる為に右に一文字進む
+            document.selection.CharRight(true,1);
+            if ( document.selection.Text == "</"){ //終了タグだったら
+                nest += 1;
+            }else if (document.selection.Text == "< "){ //スペース
+                ;// 2文字目がスペースの場合、1文字目の<はタグではなく、PHPなどの小なり記号であるとして扱い、無視する
+            }else if (document.selection.Text == "<!"){ // ! 
+                document.selection.CharRight(1);//3文字目を調べるために右に進む
+                if (document.selection.Text == "<!-") { // - コメントの場合
+                    tag = "-->";
+                    nest -= 1;
+                } else { // ハイフン以外はCDATAセクションとして扱う．
+                    tag = ">";
+                }
+                document.selection.CharLeft(1);
+            } else if (document.selection.Text == "<%") { // % JSPの場合
+                tag = "%>";
+                nest -= 1;
+            } else if (document.selection.Text == "<?") { // ? 処理命令(PI)の場合
+                tag = "?>";
+                nest -= 1;
+            } else {
+                nest -= 1; // 開始タグ
+            }
+            document.selection.CharLeft();
+        } else if (document.selection.Text == ">") {
+            document.HighlightFind=false;
+            document.selection.CharLeft(true,2);
+            if (document.selection.Text == "/") { 
+                document.HighlightFind=false;
+                document.selection.Find("<",eeFindPrevious);
+            } else if (document.selection.Text == "-") {
+                document.HighlightFind=false;
+                document.selection.Find("<!--",eeFindPrevious);
+            } else if (document.selection.Text == "%") {
+                document.HighlightFind=false;
+                document.selection.Find("<%",eeFindPrevious);
+            } else if (document.selection.Text == "?") {
+                document.HighlightFind=false;
+                document.selection.Find("<?",eeFindPrevious); 
+            } else if (document.selection.Text == "]"){ 
+                document.selection.CharLeft();
+                if (document.selection.Text == "]"){
+                    document.HighlightFind=false;
+                    document.selection.Find("<![CDATA[",eeFindPrevious);
+                } else {
+                    document.selection.CharRight(false,1);
+                }
+            } else {
+                document.selection.CharRight(false,1);
+            }
+        } else {
+            message = "Error!";
+            alert(message);
+            break;
+        }
+        document.HighlightFind=false;
+    }
+    return (tag);
+}
+
+function AddCloseTag(tag){
+    document.selection.CharRight();
+    var fromx = document.selection.GetActivePointX( eePosLogical );
+    var fromy = document.selection.GetActivePointY( eePosLogical );
+    // 閉じ括弧 スペース 改行 タブへ移動
+    document.HighlightFind=false;
+    document.selection.Find( ">| |\n|\t", eeFindNext | eeFindReplaceRegExp);
+    //選択する
+    document.selection.SetAnchorPoint(eePosView, fromx, fromy );
+    //>とか余計な文字が入るので1文字移動する
+    document.selection.CharLeft(true,1);
+    tag = document.selection.Text;
+    document.selection.SetActivePoint( eePosLogical, xPos, yPos);
+    //閉じタグのいらないリストを除外する
+    for (i=0;i<NotEndTags.length;i++){
+        if ( NotEndTags[i] == tag.toLowerCase() ){
+            tag = "";
+        }
+    }
+    if ( tag != "" ){
+      document.write("</" + tag + ">" );
+    }
+}
+
+function TagClose(){
+    tag = FindNotTagClose();
+    if (tag == ""){
+        AddCloseTag(tag);
+    }
+}
+
+
+NotEndTags = Array("br", "img", "hr", "meta", "input", "embed", "area", "base", "col", "keygen", "link", "param", "source" );
+xPos = document.selection.GetActivePointX( eePosLogical );
+yPos = document.selection.GetActivePointY( eePosLogical );
+TagClose();
+document.HighlightFind = false;
